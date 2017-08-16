@@ -24,7 +24,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     @IBOutlet weak var tipVal:UILabel!
     @IBOutlet weak var totalVal:UILabel!
     
-    var value = ""
+    var value = "0"
     
     var rotationAngle : CGFloat!
     
@@ -34,8 +34,9 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         rotationAngle = -50 * (.pi / 100)
         splitByPicker.transform = CGAffineTransform(rotationAngle:rotationAngle)
         splitByPicker.frame = CGRect(x:0, y:0, width:splitBillView.frame.width, height:splitBillView.frame.height)
-        value = "$"
-        totalAmount.text = value
+        //value = "$"
+        totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(value)!));
+
         updateViewElements()
 //        self.tipView.frame.size = CGSize(width: self.tipView.frame.width, height: 0)
         // Do any additional setup after loading the view, typically from a nib.
@@ -118,7 +119,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
             }
             value.append(".")
         case 11:
-            value = "$"
+            value = "0"
             totalVal.text = ""
             
             break
@@ -126,10 +127,22 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
             break
             
         }
-        totalAmount.text = value
+        totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(value)!));
         calculateTipAndTotalAmount()
     }
     
+    func localizedCurrencyInString(value:NSNumber) -> String {
+        
+        return currencyNumberFormatter().string(from: value)!
+    }
+    
+    // Number formatter used for displaying the values
+    func currencyNumberFormatter() -> NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale.current
+        return formatter;
+    }
     func calculateTipAndTotalAmount() -> Void {
         var billAmount:Float = 0.0
         if(value.characters.count>1)
