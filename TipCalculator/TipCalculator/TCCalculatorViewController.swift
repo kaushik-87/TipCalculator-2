@@ -34,7 +34,6 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         rotationAngle = -50 * (.pi / 100)
         splitByPicker.transform = CGAffineTransform(rotationAngle:rotationAngle)
         splitByPicker.frame = CGRect(x:0, y:0, width:splitBillView.frame.width, height:splitBillView.frame.height)
-        //value = "$"
         totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(value)!));
 
         updateViewElements()
@@ -145,13 +144,17 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     func calculateTipAndTotalAmount() -> Void {
         var billAmount:Float = 0.0
+        var divideBy = 1
         if(value.characters.count>1)
         {
             let index = value.index(value.startIndex, offsetBy: 1)
             billAmount =  Float(value.substring(from: index))!
         }
-        totalVal.text = String(calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: 1))
+        
+        divideBy = splitByPicker.selectedRow(inComponent: 0)+1
+        totalVal.text = String(calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy))
     }
+    
     
     func calculateTipAmount(billAmount:Float, tipInPercentage: Float, dividedBy:Int) -> Float {
         var totalAmount:Float = 0.0
@@ -175,23 +178,24 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
-        return String(row)
+        let title = row + 1;
+        print(title)
+        return String(title)
     }
     
-    
-//    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat
-//    {
-//        return 47
-//    }
-    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        calculateTipAndTotalAmount()
+    }
+
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
     {
         var rotationAngle : CGFloat!
+        let title = row + 1;
         rotationAngle = 50 * (.pi / 100)
         
         if (view != nil) {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 47, height: 47))
-            label.text = String(row)
+            label.text = String(title)
             label.textAlignment = NSTextAlignment.center
             label.font = UIFont.systemFont(ofSize: 25)
             label.textColor = UIColor.white
@@ -206,13 +210,9 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         label.font = UIFont.systemFont(ofSize: 25)
         label.textAlignment = NSTextAlignment.center
         label.transform = CGAffineTransform(rotationAngle: rotationAngle)
-        label.text = String(row)
+        label.text = String(title)
         view.addSubview(label)
         return view
     }
-    
-    
-    
-
-}
+ }
 
