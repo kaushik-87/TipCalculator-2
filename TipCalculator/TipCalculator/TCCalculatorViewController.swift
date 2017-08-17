@@ -22,6 +22,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     @IBOutlet weak var tipView:UIView!
     
     @IBOutlet weak var tipVal:UILabel!
+    @IBOutlet weak var tipPercentage:UILabel!
     @IBOutlet weak var totalVal:UILabel!
     
     var value = "0"
@@ -35,7 +36,6 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         splitByPicker.transform = CGAffineTransform(rotationAngle:rotationAngle)
         splitByPicker.frame = CGRect(x:0, y:0, width:splitBillView.frame.width, height:splitBillView.frame.height)
         totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(value)!));
-
         updateViewElements()
 //        self.tipView.frame.size = CGSize(width: self.tipView.frame.width, height: 0)
         // Do any additional setup after loading the view, typically from a nib.
@@ -50,7 +50,9 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
 
     func updateViewElements() -> Void {
         updateTipViewFor(selectedIndex: self.segmentControl.selectedSegmentIndex)
-        tipVal.text = String(format: "%@ %",String(self.tipPercentageSlider.value))
+        tipPercentage.text = "Tip - \(String(format: "%0.2f",self.tipPercentageSlider.value))%"
+        
+        calculateTipAndTotalAmount()
     }
     
     
@@ -70,7 +72,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     @IBAction func tipValue(sender: UISlider)
     {
-        tipVal.text = String(format: "%@ %",String(sender.value))
+        tipPercentage.text = "Tip - \(String(format: "%0.2f",sender.value))%"
         calculateTipAndTotalAmount()
     }
 
@@ -152,20 +154,37 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         }
         
         divideBy = splitByPicker.selectedRow(inComponent: 0)+1
-        totalVal.text = String(calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy))
+        totalVal.text = localizedCurrencyInString(value: NSNumber(value: Float(calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).1)))
+            //String(format: "%0.2f",calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).1)
+        tipVal.text = String(format: "%0.2f",calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).0)
+
     }
     
     
-    func calculateTipAmount(billAmount:Float, tipInPercentage: Float, dividedBy:Int) -> Float {
+//    func calculateTipAmount(billAmount:Float, tipInPercentage: Float, dividedBy:Int) -> Float {
+//        var totalAmount:Float = 0.0
+//        var tipAmount:Float = 0.0
+//        if dividedBy>0 {
+//            tipAmount = (billAmount * tipInPercentage) / 100.0
+//            totalAmount = billAmount + tipAmount
+//            totalAmount = totalAmount / Float(dividedBy)
+//        }
+//        return totalAmount
+//    }
+    
+    
+    func calculateTipAmount(billAmount:Float, tipInPercentage: Float, dividedBy:Int) -> (Float, Float) {
         var totalAmount:Float = 0.0
         var tipAmount:Float = 0.0
         if dividedBy>0 {
             tipAmount = (billAmount * tipInPercentage) / 100.0
+            tipVal.text = String(format: "%@ %",String(tipAmount))
             totalAmount = billAmount + tipAmount
             totalAmount = totalAmount / Float(dividedBy)
         }
-        return totalAmount
+        return (tipAmount, totalAmount)
     }
+    
     
     // UIPicker delegate/ datasource
     
@@ -174,7 +193,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 20
+        return 10
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
