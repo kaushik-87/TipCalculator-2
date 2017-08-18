@@ -50,7 +50,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
 
     func updateViewElements() -> Void {
         updateTipViewFor(selectedIndex: self.segmentControl.selectedSegmentIndex)
-        tipPercentage.text = "Tip - \(String(format: "%0.2f",self.tipPercentageSlider.value))%"
+        tipPercentage.text = "Tip - \(String(format: "%0.2f",self.tipPercentageSlider.value)) %"
         
         calculateTipAndTotalAmount()
     }
@@ -72,7 +72,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     @IBAction func tipValue(sender: UISlider)
     {
-        tipPercentage.text = "Tip - \(String(format: "%0.2f",sender.value))%"
+        tipPercentage.text = "Tip - \(String(format: "%0.2f",sender.value)) %"
         calculateTipAndTotalAmount()
     }
 
@@ -156,7 +156,8 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         divideBy = splitByPicker.selectedRow(inComponent: 0)+1
         totalVal.text = localizedCurrencyInString(value: NSNumber(value: Float(calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).1)))
             //String(format: "%0.2f",calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).1)
-        tipVal.text = String(format: "%0.2f",calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).0)
+        tipVal.text = localizedCurrencyInString(value: NSNumber(value: Float(calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).0)))
+            //String(format: "%0.2f",calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).0)
 
     }
     
