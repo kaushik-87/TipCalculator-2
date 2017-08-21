@@ -26,6 +26,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     @IBOutlet weak var totalVal:UILabel!
     
     var value = "0"
+    var maxNumberOfShare = 20;
     
     var rotationAngle : CGFloat!
     
@@ -36,7 +37,6 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         splitByPicker.transform = CGAffineTransform(rotationAngle:rotationAngle)
         splitByPicker.frame = CGRect(x:0, y:0, width:splitBillView.frame.width, height:splitBillView.frame.height)
         totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(value)!));
-        updateViewElements()
 //        self.tipView.frame.size = CGSize(width: self.tipView.frame.width, height: 0)
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -46,12 +46,28 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateViewElements()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let userDefaults = UserDefaults.standard
+        let minVal = userDefaults.float(forKey: "minVal")
+        let maxVal = userDefaults.float(forKey: "maxVal")
+        let defaultVal = userDefaults.float(forKey: "defaultVal")
+        
+        self.tipPercentageSlider.minimumValue = minVal
+        self.tipPercentageSlider.maximumValue = maxVal
+        self.tipPercentageSlider.value = defaultVal
+        maxNumberOfShare = userDefaults.integer(forKey: "maxShare")
+        self.splitByPicker.reloadAllComponents()
+    }
 
     func updateViewElements() -> Void {
         updateTipViewFor(selectedIndex: self.segmentControl.selectedSegmentIndex)
         tipPercentage.text = "Tip - \(String(format: "%0.2f",self.tipPercentageSlider.value)) %"
-        
         calculateTipAndTotalAmount()
     }
     
@@ -72,6 +88,9 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     
     @IBAction func tipValue(sender: UISlider)
     {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(sender.value, forKey: "defaultVal")
+        userDefaults.synchronize()
         tipPercentage.text = "Tip - \(String(format: "%0.2f",sender.value)) %"
         calculateTipAndTotalAmount()
     }
@@ -194,7 +213,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 10
+        return maxNumberOfShare
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
@@ -214,7 +233,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         rotationAngle = 50 * (.pi / 100)
         
         if (view != nil) {
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 47, height: 47))
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
             label.text = String(title)
             label.textAlignment = NSTextAlignment.center
             label.font = UIFont.systemFont(ofSize: 25)
@@ -224,8 +243,8 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
             return view!
         }
         
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 47, height: 47))
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 47, height: 47))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         label.textColor = UIColor.white
         label.font = UIFont.systemFont(ofSize: 25)
         label.textAlignment = NSTextAlignment.center
@@ -234,5 +253,10 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         view.addSubview(label)
         return view
     }
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 75
+    }
+    
+    
  }
 
