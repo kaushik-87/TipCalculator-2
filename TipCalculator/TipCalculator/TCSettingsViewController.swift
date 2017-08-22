@@ -76,20 +76,35 @@ class TCSettingsViewController: UIViewController, UIScrollViewDelegate {
         
         if (maxValue.floatValue < minValue.floatValue) {
             // show error
+            let alertController = UIAlertController(title: "Input Error", message: "Maximum tip value cannot be less than minimum tip value", preferredStyle: .alert)
             
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            present(alertController, animated: true, completion: nil)
             return
         }
         if(defautValue.floatValue > maxValue.floatValue || defautValue.floatValue < minValue.floatValue )
         {
             // show error
+            let alertController = UIAlertController(title: "Input Error", message: "Default tip value should be between minimum and maximum tip value.", preferredStyle: .alert)
             
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            present(alertController, animated: true, completion: nil)
             return
         }
         
         if (maxNoOfSharedValue.floatValue <= 1 || maxNoOfSharedValue.floatValue > 100)
         {
             // show error
+            let alertController = UIAlertController(title: "Input Error", message: "Maximum no of share cannot be more than 100.", preferredStyle: .alert)
             
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            present(alertController, animated: true, completion: nil)
             return
         }
         
