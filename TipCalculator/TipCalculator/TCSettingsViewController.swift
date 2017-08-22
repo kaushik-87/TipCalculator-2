@@ -49,10 +49,10 @@ class TCSettingsViewController: UIViewController, UIScrollViewDelegate {
         let defaultVal = userDefaults.float(forKey: "defaultVal")
         let maxShare = userDefaults.integer(forKey: "maxShare")
         
-        self.minTipVal.text = String(minVal)
-        self.maxTipVal.text = String(maxVal)
-        self.defaultTipVal.text = String(defaultVal)
-        self.maxNoOfSharesVal.text = String(maxShare)
+        self.minTipVal.text = String(format: "%0.2f",minVal)
+        self.maxTipVal.text = String(format: "%0.2f",maxVal)
+        self.defaultTipVal.text = String(format: "%0.2f",defaultVal)
+        self.maxNoOfSharesVal.text = String(format: "%d",maxShare)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
