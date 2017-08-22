@@ -179,18 +179,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
             //String(format: "%0.2f",calculateTipAmount(billAmount: billAmount, tipInPercentage: Float(self.tipPercentageSlider.value), dividedBy: divideBy).0)
 
     }
-    
-    
-//    func calculateTipAmount(billAmount:Float, tipInPercentage: Float, dividedBy:Int) -> Float {
-//        var totalAmount:Float = 0.0
-//        var tipAmount:Float = 0.0
-//        if dividedBy>0 {
-//            tipAmount = (billAmount * tipInPercentage) / 100.0
-//            totalAmount = billAmount + tipAmount
-//            totalAmount = totalAmount / Float(dividedBy)
-//        }
-//        return totalAmount
-//    }
+
     
     
     func calculateTipAmount(billAmount:Float, tipInPercentage: Float, dividedBy:Int) -> (Float, Float) {

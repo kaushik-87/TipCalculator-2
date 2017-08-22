@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D731417D1F4BFE50002BE5FD /* TCSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D731417C1F4BFE50002BE5FD /* TCSlider.swift */; };
 		D78989981F2575D90051DD54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78989971F2575D90051DD54 /* AppDelegate.swift */; };
 		D789899A1F2575D90051DD54 /* TCCalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78989991F2575D90051DD54 /* TCCalculatorViewController.swift */; };
 		D789899C1F2575D90051DD54 /* TCSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D789899B1F2575D90051DD54 /* TCSettingsViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D731417C1F4BFE50002BE5FD /* TCSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCSlider.swift; sourceTree = "<group>"; };
 		D78989941F2575D90051DD54 /* TipCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TipCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D78989971F2575D90051DD54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D78989991F2575D90051DD54 /* TCCalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCCalculatorViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			children = (
 				D78989971F2575D90051DD54 /* AppDelegate.swift */,
 				D78989991F2575D90051DD54 /* TCCalculatorViewController.swift */,
+				D731417C1F4BFE50002BE5FD /* TCSlider.swift */,
 				D789899B1F2575D90051DD54 /* TCSettingsViewController.swift */,
 				D789899D1F2575D90051DD54 /* Main.storyboard */,
 				D78989A01F2575D90051DD54 /* Assets.xcassets */,
@@ -262,6 +265,7 @@
 				D789899C1F2575D90051DD54 /* TCSettingsViewController.swift in Sources */,
 				D78989981F2575D90051DD54 /* AppDelegate.swift in Sources */,
 				D789899A1F2575D90051DD54 /* TCCalculatorViewController.swift in Sources */,
+				D731417D1F4BFE50002BE5FD /* TCSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
