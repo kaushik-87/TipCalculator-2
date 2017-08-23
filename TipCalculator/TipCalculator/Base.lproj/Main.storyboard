@@ -283,7 +283,7 @@
                                     <view hidden="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2V4-Mz-F9n" userLabel="tipSliderView">
                                         <rect key="frame" x="0.0" y="28" width="320" height="62"/>
                                         <subviews>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="30" translatesAutoresizingMaskIntoConstraints="NO" id="bWA-pn-LEV" customClass="TCSlider" customModule="TipCalculator" customModuleProvider="target">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="30" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWA-pn-LEV" customClass="TCSlider" customModule="TipCalculator" customModuleProvider="target">
                                                 <rect key="frame" x="37" y="16" width="247" height="31"/>
                                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
