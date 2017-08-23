@@ -37,6 +37,7 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         splitByPicker.transform = CGAffineTransform(rotationAngle:rotationAngle)
         splitByPicker.frame = CGRect(x:0, y:0, width:splitBillView.frame.width, height:splitBillView.frame.height)
         totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(value)!));
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUIFromPrefernce), name: NSNotification.Name(rawValue: "ResetUI"), object: nil)
 //        self.tipView.frame.size = CGSize(width: self.tipView.frame.width, height: 0)
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -46,6 +47,27 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func updateUIFromPrefernce() -> Void{
+        let userDefaults = UserDefaults.standard
+        let minVal = userDefaults.float(forKey: "minVal")
+        let maxVal = userDefaults.float(forKey: "maxVal")
+        let defaultVal = userDefaults.float(forKey: "defaultVal")
+        let billAmount = userDefaults.string(forKey: "billAmount")
+        let splitBy = userDefaults.integer(forKey: "splitBy")
+        
+        self.totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(billAmount!)!))
+        value = billAmount!
+        self.tipPercentageSlider.minimumValue = minVal
+        self.tipPercentageSlider.maximumValue = maxVal
+        self.tipPercentageSlider.value = defaultVal
+        maxNumberOfShare = userDefaults.integer(forKey: "maxShare")
+        self.splitByPicker.reloadAllComponents()
+        self.splitByPicker.selectRow(splitBy-1, inComponent: 0, animated: true)
+        tipPercentage.text = "Tip - \(String(format: "%0.2f",self.tipPercentageSlider.value)) %"
+        calculateTipAndTotalAmount()
+
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateViewElements()
@@ -53,21 +75,11 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let userDefaults = UserDefaults.standard
-        let minVal = userDefaults.float(forKey: "minVal")
-        let maxVal = userDefaults.float(forKey: "maxVal")
-        let defaultVal = userDefaults.float(forKey: "defaultVal")
-        
-        self.tipPercentageSlider.minimumValue = minVal
-        self.tipPercentageSlider.maximumValue = maxVal
-        self.tipPercentageSlider.value = defaultVal
-        maxNumberOfShare = userDefaults.integer(forKey: "maxShare")
-        self.splitByPicker.reloadAllComponents()
+        updateUIFromPrefernce()
     }
 
     func updateViewElements() -> Void {
         updateTipViewFor(selectedIndex: self.segmentControl.selectedSegmentIndex)
-        tipPercentage.text = "Tip - \(String(format: "%0.2f",self.tipPercentageSlider.value)) %"
         calculateTipAndTotalAmount()
     }
     
@@ -147,7 +159,13 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
             break
             
         }
-        totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(value)!));
+        
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(value, forKey:"billAmount")
+        userDefaults.synchronize()
+        
+        totalAmount.text = localizedCurrencyInString(value: NSNumber(value: Float(value)!))
+        
         calculateTipAndTotalAmount()
     }
     
@@ -212,6 +230,9 @@ class TCCalculatorViewController: UIViewController, UIPickerViewDelegate, UIPick
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(row+1, forKey:"splitBy")
+        userDefaults.synchronize()
         calculateTipAndTotalAmount()
     }
 
