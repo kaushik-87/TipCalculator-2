@@ -11,26 +11,29 @@ Time spent: **10** hours spent in total
 
 The following **required** functionality is complete:
 
-* [ ] User can enter a bill amount, choose a tip percentage, and see the tip and total values.
-* [ ] Settings page to change the default tip percentage.
+The following **required** functionality is complete:
+
+* [x] User can enter a bill amount, choose a tip percentage, and see the tip and total values.
+* [x] Settings page to change the default tip percentage.
 
 The following **optional** features are implemented:
-* [ ] UI layout supported both portrait/ landscape
-* [ ] Used a custom key pad in main screen which makes easier to enter the bill amount.
-* [ ] Split bill between certain number of people. Which can be changed in the settings.
-* [ ] Using locale-specific currency and currency thousands separators.
-* [ ] Minimum, Maximum value of the tip slider can be set in the settings.
-
+* [x] UI animations
+* [x] Remembering the bill amount across app restarts (if <10mins)
+* [x] Using locale-specific currency and currency thousands separators.
+* [x] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
 The following **additional** features are implemented:
-
-- [ ] List anything else that you can get done to improve the app functionality!
+* [x] UI layout supported both portrait/ landscape
+* [x] Used a custom key pad in main screen which makes easier to enter the bill amount.
+* [x] Split bill between certain number of people. Which can be changed in the settings.
+* [x] Using locale-specific currency and currency thousands separators.
+* [x] Minimum, Maximum value of the tip slider can be set in the settings.
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/MWnlC2U.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/g4AwJuF.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 <img src='http://i.imgur.com/kLAbZs0.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
